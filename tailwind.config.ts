@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'oswald': ['Oswald', 'sans-serif'],
+				'sans': ['Oswald', 'sans-serif']
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,6 +65,13 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				isle: {
+					charcoal: '#1A1A1A',
+					forest: '#2D5016',
+					earth: '#8B4513',
+					danger: '#FF6B35',
+					brown: '#8B4513'
 				}
 			},
 			borderRadius: {

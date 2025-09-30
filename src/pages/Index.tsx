@@ -9,6 +9,7 @@ import ProfilePage from '@/components/sections/ProfilePage';
 import WheelPage from '@/components/sections/WheelPage';
 import CasesPage from '@/components/sections/CasesPage';
 import MapPage from '@/components/sections/MapPage';
+import ClansPage from '@/components/sections/ClansPage';
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
@@ -20,6 +21,7 @@ export default function Index() {
     { id: 'inventory', label: 'Инвентарь', icon: 'Package2' },
     { id: 'map', label: 'Карта', icon: 'Map' },
     { id: 'profile', label: 'Профиль', icon: 'User' },
+    { id: 'clans', label: 'Кланы', icon: 'Users' },
     { id: 'rules', label: 'Правила', icon: 'FileText' },
     { id: 'wheel', label: 'Колесо удачи', icon: 'RotateCcw' },
     { id: 'cases', label: 'Кейсы', icon: 'Package' },
@@ -139,6 +141,8 @@ export default function Index() {
         return <CasesPage />;
       case 'map':
         return <MapPage />;
+      case 'clans':
+        return <ClansPage />;
       default:
         return <HomePage topPlayers={topPlayers} />;
     }

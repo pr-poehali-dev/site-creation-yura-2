@@ -6,6 +6,7 @@ import ShopPage from '@/components/sections/ShopPage';
 import InventoryPage from '@/components/sections/InventoryPage';
 import AuctionPage from '@/components/sections/AuctionPage';
 import ProfilePage from '@/components/sections/ProfilePage';
+import WheelPage from '@/components/sections/WheelPage';
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
@@ -130,6 +131,8 @@ export default function Index() {
         return <ProfilePage playerStats={playerStats} myDinosaurs={myDinosaurs} />;
       case 'auction':
         return <AuctionPage />;
+      case 'wheel':
+        return <WheelPage />;
       default:
         return <HomePage topPlayers={topPlayers} />;
     }

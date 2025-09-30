@@ -28,8 +28,7 @@ export default function Navigation({ navigationItems, activeSection, setActiveSe
                 <div className="relative flex items-center space-x-3 bg-gradient-to-r from-primary to-secondary px-4 py-2 rounded-xl">
                   <div className="text-3xl">🦕</div>
                   <div>
-                    <div className="text-xl font-black tracking-wider text-white">TAPKIN</div>
-                    <div className="text-xs font-bold text-white/80 -mt-1">SUPREME</div>
+                    <div className="text-xl font-black tracking-wider text-white">PANGAEA</div>
                   </div>
                 </div>
               </div>

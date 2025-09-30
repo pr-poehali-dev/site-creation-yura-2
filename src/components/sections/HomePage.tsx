@@ -57,7 +57,7 @@ export default function HomePage({ topPlayers }: HomePageProps) {
             Новое обновление 2.5 уже здесь!
           </Badge>
           <h1 className="text-7xl font-black tracking-wider glow-text drop-shadow-2xl">
-            THE ISLE SUPREME
+            PANGAEA
           </h1>
           <p className="text-2xl text-gray-200 max-w-2xl font-medium">
             Погрузитесь в мир доисторических существ. Выживайте, охотьтесь, доминируйте.

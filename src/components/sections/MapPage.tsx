@@ -143,31 +143,12 @@ export default function MapPage() {
 
           <Card>
             <CardContent className="p-0">
-              <div className="relative w-full aspect-square bg-gradient-to-br from-green-900/30 via-green-800/30 to-blue-900/30 overflow-hidden">
-                <div 
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
-                    `,
-                    backgroundSize: '10% 10%'
-                  }}
+              <div className="relative w-full aspect-square overflow-hidden bg-gray-900">
+                <img 
+                  src="https://cdn.poehali.dev/files/a38310ff-24f6-4b88-9b16-8ba3227b3b68.png" 
+                  alt="TheIsle V3 Map"
+                  className="w-full h-full object-cover"
                 />
-
-                <div className="absolute inset-0 pointer-events-none">
-                  <svg className="w-full h-full" viewBox="0 0 100 100">
-                    <path d="M 15 70 Q 20 65, 25 60 L 35 55 L 40 50 L 48 45 L 55 48 L 60 52 L 65 55" 
-                      stroke="rgba(59, 130, 246, 0.5)" 
-                      strokeWidth="0.5" 
-                      fill="none" 
-                    />
-                    
-                    <circle cx="25" cy="30" r="4" fill="rgba(59, 130, 246, 0.3)" />
-                    <circle cx="50" cy="45" r="6" fill="rgba(59, 130, 246, 0.3)" />
-                    <circle cx="70" cy="60" r="5" fill="rgba(34, 197, 94, 0.3)" />
-                  </svg>
-                </div>
 
                 {filteredLocations.map((location) => (
                   <div
@@ -175,13 +156,13 @@ export default function MapPage() {
                     className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
                     style={{ left: `${location.x}%`, top: `${location.y}%` }}
                   >
-                    <div className={`w-8 h-8 rounded-full ${location.color} flex items-center justify-center text-sm shadow-lg group-hover:scale-125 transition-transform`}>
+                    <div className="w-8 h-8 rounded-full bg-black/70 backdrop-blur-sm border-2 border-white flex items-center justify-center text-sm shadow-2xl group-hover:scale-125 transition-transform">
                       {location.icon}
                     </div>
                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                      <div className="bg-card border border-border rounded-lg p-2 shadow-xl whitespace-nowrap">
-                        <div className="font-bold text-sm">{location.name}</div>
-                        <div className="text-xs text-muted-foreground">{location.description}</div>
+                      <div className="bg-black/90 backdrop-blur-sm border border-white/30 rounded-lg p-3 shadow-2xl whitespace-nowrap">
+                        <div className="font-bold text-sm text-white">{location.name}</div>
+                        <div className="text-xs text-gray-300">{location.description}</div>
                       </div>
                     </div>
                   </div>
@@ -189,45 +170,45 @@ export default function MapPage() {
 
                 {playerPosition && (
                   <div
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2 animate-pulse"
+                    className="absolute transform -translate-x-1/2 -translate-y-1/2 animate-pulse z-20"
                     style={{ left: `${playerPosition.x}%`, top: `${playerPosition.y}%` }}
                   >
-                    <div className="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-xl shadow-2xl border-4 border-white">
+                    <div className="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center text-2xl shadow-2xl border-4 border-white">
                       📍
                     </div>
                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2">
-                      <div className="bg-red-500 text-white rounded-lg px-3 py-1 shadow-xl whitespace-nowrap font-bold">
+                      <div className="bg-red-500 text-white rounded-lg px-4 py-2 shadow-2xl whitespace-nowrap font-bold border-2 border-white">
                         Вы здесь
                       </div>
                     </div>
                   </div>
                 )}
 
-                <div className="absolute top-4 right-4 bg-card/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
-                  <div className="text-xs text-muted-foreground mb-2">Легенда:</div>
-                  <div className="space-y-1 text-xs">
+                <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm rounded-lg p-3 shadow-2xl border border-white/20">
+                  <div className="text-xs text-gray-400 mb-2">Легенда:</div>
+                  <div className="space-y-1 text-xs text-white">
                     <div className="flex items-center space-x-2">
-                      <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+                      <div className="text-base">💧</div>
                       <span>Водоемы</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-4 h-4 bg-gray-600 rounded-full"></div>
+                      <div className="text-base">🗿</div>
                       <span>Ориентиры</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                      <div className="text-base">🎯</div>
                       <span>Спавны</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-4 h-4 bg-red-700 rounded-full"></div>
+                      <div className="text-base">☠️</div>
                       <span>Опасно</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="absolute bottom-4 left-4 bg-card/90 backdrop-blur-sm rounded-lg p-2 shadow-lg text-xs">
-                  <div className="font-bold">Размер карты: 15x15 км</div>
-                  <div className="text-muted-foreground">TheIsle Legacy V3</div>
+                <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-sm rounded-lg p-3 shadow-2xl text-xs border border-white/20">
+                  <div className="font-bold text-white">Размер карты: 15x15 км</div>
+                  <div className="text-gray-400">TheIsle Legacy V3</div>
                 </div>
               </div>
             </CardContent>

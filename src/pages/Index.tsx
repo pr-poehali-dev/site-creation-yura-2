@@ -10,6 +10,7 @@ import WheelPage from '@/components/sections/WheelPage';
 import CasesPage from '@/components/sections/CasesPage';
 import MapPage from '@/components/sections/MapPage';
 import ClansPage from '@/components/sections/ClansPage';
+import EventsPage from '@/components/sections/EventsPage';
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
@@ -143,6 +144,8 @@ export default function Index() {
         return <MapPage />;
       case 'clans':
         return <ClansPage />;
+      case 'events':
+        return <EventsPage />;
       default:
         return <HomePage topPlayers={topPlayers} />;
     }

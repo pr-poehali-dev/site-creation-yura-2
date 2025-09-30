@@ -1,11 +1,18 @@
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Progress } from '@/components/ui/progress';
 import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
+import ClanCard from '@/components/clans/ClanCard';
+import ClanHeader from '@/components/clans/ClanHeader';
+import ClanInfoTab from '@/components/clans/ClanInfoTab';
+import ClanMembersTab from '@/components/clans/ClanMembersTab';
+import ClanStorageTab from '@/components/clans/ClanStorageTab';
+import ClanMapTab from '@/components/clans/ClanMapTab';
+import ClanTasksTab from '@/components/clans/ClanTasksTab';
+import ClanNewsTab from '@/components/clans/ClanNewsTab';
+import ClanActivityTab from '@/components/clans/ClanActivityTab';
 
 interface Clan {
   id: number;
@@ -174,24 +181,6 @@ export default function ClansPage() {
     clan.tag.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const getRankColor = (rank: string) => {
-    switch (rank) {
-      case 'Лидер': return 'text-yellow-400';
-      case 'Офицер': return 'text-orange-400';
-      case 'Ветеран': return 'text-purple-400';
-      case 'Боец': return 'text-blue-400';
-      default: return 'text-gray-400';
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'В сети': return 'bg-green-500';
-      case 'В игре': return 'bg-blue-500';
-      default: return 'bg-gray-500';
-    }
-  };
-
   if (selectedClan) {
     return (
       <div className="space-y-6">
@@ -202,33 +191,7 @@ export default function ClansPage() {
           </Button>
         </div>
 
-        <Card className={`bg-gradient-to-r ${selectedClan.color}`}>
-          <CardContent className="p-6 text-white">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="text-6xl">{selectedClan.icon}</div>
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <h2 className="text-3xl font-bold">{selectedClan.name}</h2>
-                    <Badge variant="secondary" className="text-lg">[{selectedClan.tag}]</Badge>
-                  </div>
-                  <p className="text-white/80 mt-1">Лидер: {selectedClan.leader}</p>
-                  <p className="text-white/80">Основан: {selectedClan.founded}</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="text-4xl font-bold">Уровень {selectedClan.level}</div>
-                <div className="text-white/80 mt-2">
-                  Участники: {selectedClan.members}/{selectedClan.maxMembers}
-                </div>
-                <Button className="mt-4" variant="secondary">
-                  <Icon name="UserPlus" size={16} className="mr-2" />
-                  Подать заявку
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <ClanHeader clan={selectedClan} />
 
         <Tabs defaultValue="info" className="space-y-6">
           <TabsList className="grid w-full grid-cols-7">
@@ -241,271 +204,32 @@ export default function ClansPage() {
             <TabsTrigger value="activity">Активность</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="info" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>О клане</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h3 className="font-semibold mb-2">Описание</h3>
-                  <p className="text-muted-foreground">{selectedClan.description}</p>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <h3 className="font-semibold mb-2">Территория</h3>
-                    <div className="flex items-center space-x-2">
-                      <Icon name="MapPin" size={16} className="text-primary" />
-                      <span>{selectedClan.territory}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">Дата основания</h3>
-                    <div className="flex items-center space-x-2">
-                      <Icon name="Calendar" size={16} className="text-primary" />
-                      <span>{selectedClan.founded}</span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Рейтинг клана</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-4xl font-bold text-primary mb-2">#1</div>
-                  <p className="text-sm text-muted-foreground">Первое место в рейтинге</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Общие убийства</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-4xl font-bold text-destructive mb-2">2,547</div>
-                  <p className="text-sm text-muted-foreground">За всё время</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Казна клана</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-4xl font-bold text-accent mb-2">45,000 🪙</div>
-                  <p className="text-sm text-muted-foreground">Доступно для развития</p>
-                </CardContent>
-              </Card>
-            </div>
+          <TabsContent value="info">
+            <ClanInfoTab clan={selectedClan} />
           </TabsContent>
 
-          <TabsContent value="members" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Участники клана ({clanMembers.length})</CardTitle>
-                <CardDescription>Список всех членов клана с их статистикой</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {clanMembers.map((member) => (
-                    <div key={member.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors">
-                      <div className="flex items-center space-x-4">
-                        <div className={`w-3 h-3 rounded-full ${getStatusColor(member.status)}`} />
-                        <div>
-                          <div className="flex items-center space-x-2">
-                            <span className="font-semibold">{member.name}</span>
-                            <Badge variant="outline" className={getRankColor(member.rank)}>
-                              {member.rank}
-                            </Badge>
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            Уровень {member.level} • Вступил: {member.joinedDate}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-semibold text-primary">{member.contribution.toLocaleString()}</div>
-                        <div className="text-xs text-muted-foreground">Вклад в клан</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+          <TabsContent value="members">
+            <ClanMembersTab members={clanMembers} />
           </TabsContent>
 
-          <TabsContent value="storage" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Хранилище клана</CardTitle>
-                <CardDescription>Общие ресурсы доступные всем членам клана</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {clanInventory.map((item) => (
-                    <Card key={item.id}>
-                      <CardContent className="p-4 text-center">
-                        <div className="text-4xl mb-2">{item.icon}</div>
-                        <div className="font-semibold">{item.name}</div>
-                        <div className="text-2xl font-bold text-primary mt-2">{item.quantity}</div>
-                        <Button size="sm" className="w-full mt-3">
-                          <Icon name="Download" size={14} className="mr-1" />
-                          Взять
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+          <TabsContent value="storage">
+            <ClanStorageTab inventory={clanInventory} />
           </TabsContent>
 
-          <TabsContent value="map" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Территория клана</CardTitle>
-                <CardDescription>Контролируемые локации: {selectedClan.territory}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="relative w-full aspect-video bg-gray-900 rounded-lg overflow-hidden">
-                  <img 
-                    src="https://cdn.poehali.dev/files/a38310ff-24f6-4b88-9b16-8ba3227b3b68.png" 
-                    alt="Clan Territory"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2">
-                    <div className={`text-6xl animate-pulse`}>{selectedClan.icon}</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          <TabsContent value="map">
+            <ClanMapTab clan={selectedClan} />
           </TabsContent>
 
-          <TabsContent value="tasks" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Клановые задания</CardTitle>
-                <CardDescription>Выполняйте задания вместе и получайте награды</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {clanTasks.map((task) => (
-                  <Card key={task.id}>
-                    <CardContent className="p-4">
-                      <div className="flex items-start space-x-4">
-                        <div className="text-4xl">{task.icon}</div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-2">
-                            <h3 className="font-semibold text-lg">{task.title}</h3>
-                            <Badge variant="outline" className="text-accent">{task.reward}</Badge>
-                          </div>
-                          <p className="text-sm text-muted-foreground mb-3">{task.description}</p>
-                          <div className="space-y-2">
-                            <div className="flex justify-between text-sm">
-                              <span>Прогресс: {task.progress}/{task.total}</span>
-                              <span>{Math.round((task.progress / task.total) * 100)}%</span>
-                            </div>
-                            <Progress value={(task.progress / task.total) * 100} />
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </CardContent>
-            </Card>
+          <TabsContent value="tasks">
+            <ClanTasksTab tasks={clanTasks} />
           </TabsContent>
 
-          <TabsContent value="news" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Новости клана</CardTitle>
-                <CardDescription>Последние события и достижения</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {clanNews.map((news) => (
-                  <div key={news.id} className="flex items-start space-x-4 p-4 border rounded-lg">
-                    <div className="text-3xl">{news.icon}</div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold mb-1">{news.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">{news.text}</p>
-                      <div className="text-xs text-muted-foreground flex items-center">
-                        <Icon name="Clock" size={12} className="mr-1" />
-                        {news.date}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+          <TabsContent value="news">
+            <ClanNewsTab news={clanNews} />
           </TabsContent>
 
-          <TabsContent value="activity" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Онлайн участников</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center">
-                    <div className="text-5xl font-bold text-primary mb-2">
-                      {clanMembers.filter(m => m.status === 'В сети' || m.status === 'В игре').length}
-                    </div>
-                    <p className="text-muted-foreground">из {clanMembers.length} участников</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Активность за неделю</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center">
-                    <div className="text-5xl font-bold text-accent mb-2">94%</div>
-                    <p className="text-muted-foreground">Средняя активность</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Последняя активность</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <Icon name="Sword" size={20} className="text-destructive" />
-                    <div>
-                      <div className="font-semibold">DinoHunter_X убил Карнотавра</div>
-                      <div className="text-sm text-muted-foreground">5 минут назад</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <Icon name="Download" size={20} className="text-primary" />
-                    <div>
-                      <div className="font-semibold">RaptorKing взял мясо из хранилища</div>
-                      <div className="text-sm text-muted-foreground">15 минут назад</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <Icon name="Trophy" size={20} className="text-accent" />
-                    <div>
-                      <div className="font-semibold">Клан выполнил задание "Групповая охота"</div>
-                      <div className="text-sm text-muted-foreground">1 час назад</div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          <TabsContent value="activity">
+            <ClanActivityTab members={clanMembers} />
           </TabsContent>
         </Tabs>
       </div>
@@ -539,53 +263,11 @@ export default function ClansPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredClans.map((clan) => (
-          <Card 
+          <ClanCard 
             key={clan.id} 
-            className="hover:shadow-lg transition-all duration-300 cursor-pointer"
-            onClick={() => setSelectedClan(clan)}
-          >
-            <CardHeader className={`bg-gradient-to-r ${clan.color} text-white`}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="text-4xl">{clan.icon}</div>
-                  <div>
-                    <CardTitle className="text-xl">{clan.name}</CardTitle>
-                    <CardDescription className="text-white/80">[{clan.tag}]</CardDescription>
-                  </div>
-                </div>
-                <Badge variant="secondary" className="text-lg">
-                  Ур. {clan.level}
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4 pt-6">
-              <p className="text-sm text-muted-foreground line-clamp-2">{clan.description}</p>
-              
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <div className="text-muted-foreground">Лидер</div>
-                  <div className="font-semibold">{clan.leader}</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Территория</div>
-                  <div className="font-semibold">{clan.territory}</div>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>Участники</span>
-                  <span className="font-semibold">{clan.members}/{clan.maxMembers}</span>
-                </div>
-                <Progress value={(clan.members / clan.maxMembers) * 100} />
-              </div>
-
-              <Button className="w-full">
-                <Icon name="Eye" size={16} className="mr-2" />
-                Подробнее
-              </Button>
-            </CardContent>
-          </Card>
+            clan={clan} 
+            onClick={() => setSelectedClan(clan)} 
+          />
         ))}
       </div>
     </div>

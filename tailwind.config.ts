@@ -19,8 +19,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'oswald': ['Oswald', 'sans-serif'],
-				'sans': ['Oswald', 'sans-serif']
+				'exo': ['Exo 2', 'sans-serif'],
+				'sans': ['Exo 2', 'sans-serif']
 			},
 			colors: {
 				border: 'hsl(var(--border))',

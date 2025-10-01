@@ -62,16 +62,6 @@ export default function HomePage({ topPlayers }: HomePageProps) {
           <p className="text-2xl text-gray-200 max-w-2xl font-medium">
             Погрузитесь в мир доисторических существ. Выживайте, охотьтесь, доминируйте.
           </p>
-          <div className="flex items-center space-x-4">
-            <Button size="lg" className="game-button text-lg px-8 py-6">
-              <Icon name="Play" size={24} className="mr-3" />
-              ИГРАТЬ СЕЙЧАС
-            </Button>
-            <Button size="lg" variant="outline" className="border-2 border-white/50 bg-black/30 backdrop-blur-sm text-white hover:bg-white/10 text-lg px-8 py-6">
-              <Icon name="Video" size={24} className="mr-3" />
-              Трейлер
-            </Button>
-          </div>
         </div>
       </div>
 

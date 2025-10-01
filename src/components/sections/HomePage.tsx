@@ -51,7 +51,7 @@ export default function HomePage({ topPlayers }: HomePageProps) {
           alt="Pangaea" 
           className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-6 px-4">
+        <div className="absolute inset-0 flex flex-col items-end justify-center text-right space-y-6 px-4 pr-16">
           <Badge className="bg-accent/90 text-white text-sm px-4 py-2 backdrop-blur-sm">
             <Icon name="Zap" size={14} className="mr-2" />
             Новое обновление 2.5 уже здесь!

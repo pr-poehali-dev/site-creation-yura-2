@@ -56,7 +56,7 @@ export default function HomePage({ topPlayers }: HomePageProps) {
             <Icon name="Zap" size={14} className="mr-2" />
             Новое обновление 2.5 уже здесь!
           </Badge>
-          <h1 className="text-7xl font-black tracking-wider glow-text drop-shadow-2xl">
+          <h1 className="text-7xl font-black tracking-wider drop-shadow-2xl bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
             PANGAEA
           </h1>
           <p className="text-2xl text-gray-200 max-w-2xl font-medium">

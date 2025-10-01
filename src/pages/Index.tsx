@@ -11,11 +11,13 @@ import CasesPage from '@/components/sections/CasesPage';
 import MapPage from '@/components/sections/MapPage';
 import ClansPage from '@/components/sections/ClansPage';
 import EventsPage from '@/components/sections/EventsPage';
+import AdminPage from '@/components/sections/AdminPage';
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
+  const [isAdmin] = useState(true);
 
-  const navigationItems = [
+  const baseNavigationItems = [
     { id: 'home', label: 'Главная', icon: 'Home' },
     { id: 'shop', label: 'Магазин', icon: 'ShoppingCart' },
     { id: 'auction', label: 'Аукцион', icon: 'Gavel' },
@@ -29,6 +31,12 @@ export default function Index() {
     { id: 'events', label: 'События', icon: 'Calendar' },
     { id: 'donate', label: 'Донаты', icon: 'Heart' }
   ];
+
+  const adminNavigationItem = { id: 'admin', label: 'Админ-панель', icon: 'ShieldAlert' };
+  
+  const navigationItems = isAdmin 
+    ? [...baseNavigationItems, adminNavigationItem]
+    : baseNavigationItems;
 
   const shopItems = [
     { id: 1, name: 'Мясо хищника', price: 150, category: 'Еда', rarity: 'common' },
@@ -146,6 +154,8 @@ export default function Index() {
         return <ClansPage />;
       case 'events':
         return <EventsPage />;
+      case 'admin':
+        return isAdmin ? <AdminPage /> : <HomePage topPlayers={topPlayers} />;
       default:
         return <HomePage topPlayers={topPlayers} />;
     }

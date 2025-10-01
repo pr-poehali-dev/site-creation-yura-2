@@ -12,10 +12,33 @@ import MapPage from '@/components/sections/MapPage';
 import ClansPage from '@/components/sections/ClansPage';
 import EventsPage from '@/components/sections/EventsPage';
 import AdminPage from '@/components/sections/AdminPage';
+import LoginPage from '@/components/sections/LoginPage';
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
-  const [isAdmin] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const handleLogin = (username: string, password: string) => {
+    if (username === 'admin' && password === 'admin') {
+      setCurrentUser('AdminUser');
+      setIsAdmin(true);
+      setIsLoggedIn(true);
+    } else if (username === 'player' && password === '123') {
+      setCurrentUser('PlayerUser');
+      setIsAdmin(false);
+      setIsLoggedIn(true);
+    } else if (username && password) {
+      setCurrentUser(username);
+      setIsAdmin(false);
+      setIsLoggedIn(true);
+    }
+  };
+
+  if (!isLoggedIn) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
 
   const baseNavigationItems = [
     { id: 'home', label: 'Главная', icon: 'Home' },
@@ -155,7 +178,7 @@ export default function Index() {
       case 'events':
         return <EventsPage />;
       case 'admin':
-        return isAdmin ? <AdminPage /> : <HomePage topPlayers={topPlayers} />;
+        return isAdmin ? <AdminPage currentUser={currentUser} /> : <HomePage topPlayers={topPlayers} />;
       default:
         return <HomePage topPlayers={topPlayers} />;
     }
@@ -166,7 +189,9 @@ export default function Index() {
       <Navigation 
         navigationItems={navigationItems} 
         activeSection={activeSection} 
-        setActiveSection={setActiveSection} 
+        setActiveSection={setActiveSection}
+        currentUser={currentUser}
+        onLogout={() => setIsLoggedIn(false)}
       />
 
       <main className="container mx-auto px-4 py-8">

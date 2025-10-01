@@ -8,7 +8,49 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
 
-export default function AdminPage() {
+interface AdminLog {
+  id: number;
+  timestamp: string;
+  admin: string;
+  action: string;
+  target: string;
+  details: string;
+  type: 'user' | 'shop' | 'news' | 'server' | 'settings';
+}
+
+interface AdminPageProps {
+  currentUser: string;
+}
+
+export default function AdminPage({ currentUser }: AdminPageProps) {
+  const [logs, setLogs] = useState<AdminLog[]>([
+    { id: 1, timestamp: '2024-10-01 14:23:15', admin: 'AdminUser', action: 'Изменен баланс', target: 'DinoHunter_X', details: 'PL: 10000 → 12450', type: 'user' },
+    { id: 2, timestamp: '2024-10-01 14:15:42', admin: 'AdminUser', action: 'Добавлен товар', target: 'Тираннозавр', details: 'Цена: 15000 PL', type: 'shop' },
+    { id: 3, timestamp: '2024-10-01 13:58:23', admin: 'ModeratorPro', action: 'Заблокирован пользователь', target: 'Cheater123', details: 'Причина: Читы', type: 'user' },
+    { id: 4, timestamp: '2024-10-01 13:45:11', admin: 'AdminUser', action: 'Опубликована новость', target: 'Обновление 2.5', details: 'Новые динозавры', type: 'news' },
+    { id: 5, timestamp: '2024-10-01 13:30:00', admin: 'AdminUser', action: 'Перезапущен сервер', target: 'RU-1 Classic', details: 'Плановое обслуживание', type: 'server' },
+    { id: 6, timestamp: '2024-10-01 12:15:33', admin: 'AdminUser', action: 'Изменены настройки', target: 'Экономика', details: 'ОА за час: 5 → 10', type: 'settings' },
+  ]);
+
+  const addLog = (action: string, target: string, details: string, type: AdminLog['type']) => {
+    const newLog: AdminLog = {
+      id: logs.length + 1,
+      timestamp: new Date().toLocaleString('ru-RU', { 
+        year: 'numeric', 
+        month: '2-digit', 
+        day: '2-digit', 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit' 
+      }),
+      admin: currentUser,
+      action,
+      target,
+      details,
+      type
+    };
+    setLogs([newLog, ...logs]);
+  };
   const [users, setUsers] = useState([
     { id: 1, username: 'DinoHunter_X', email: 'hunter@example.com', balance: 12450, activityPoints: 2847, premium: true, role: 'player', banned: false },
     { id: 2, username: 'RexKiller', email: 'rex@example.com', balance: 8900, activityPoints: 1523, premium: false, role: 'player', banned: false },
@@ -88,7 +130,7 @@ export default function AdminPage() {
       </div>
 
       <Tabs defaultValue="users" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="users">
             <Icon name="Users" size={16} className="mr-2" />
             Пользователи
@@ -108,6 +150,10 @@ export default function AdminPage() {
           <TabsTrigger value="settings">
             <Icon name="Settings" size={16} className="mr-2" />
             Настройки
+          </TabsTrigger>
+          <TabsTrigger value="logs">
+            <Icon name="ScrollText" size={16} className="mr-2" />
+            Логи
           </TabsTrigger>
         </TabsList>
 
@@ -163,11 +209,11 @@ export default function AdminPage() {
                             <Icon name="Edit" size={14} className="mr-1" />
                             Изменить
                           </Button>
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" onClick={() => addLog('Просмотр профиля', user.username, 'Открыт профиль пользователя', 'user')}>
                             <Icon name="Eye" size={14} className="mr-1" />
                             Просмотр
                           </Button>
-                          <Button size="sm" variant="destructive">
+                          <Button size="sm" variant="destructive" onClick={() => addLog('Заблокирован пользователь', user.username, 'Причина: Нарушение правил', 'user')}>
                             <Icon name="Ban" size={14} className="mr-1" />
                             Бан
                           </Button>
@@ -477,12 +523,138 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <Button className="game-button">
+              <Button className="game-button" onClick={() => addLog('Изменены настройки', 'Глобальные настройки', 'Обновлены параметры экономики', 'settings')}>
                 <Icon name="Save" size={16} className="mr-2" />
                 Сохранить настройки
               </Button>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="logs" className="space-y-6">
+          <Card className="game-card">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Логи действий администраторов</CardTitle>
+                  <CardDescription>История всех действий в админ-панели</CardDescription>
+                </div>
+                <div className="flex space-x-2">
+                  <Button size="sm" variant="outline">
+                    <Icon name="Filter" size={16} className="mr-2" />
+                    Фильтр
+                  </Button>
+                  <Button size="sm" variant="outline">
+                    <Icon name="Download" size={16} className="mr-2" />
+                    Экспорт
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {logs.map((log) => {
+                  const getTypeColor = (type: string) => {
+                    switch (type) {
+                      case 'user': return 'border-blue-500/30 bg-blue-500/5';
+                      case 'shop': return 'border-green-500/30 bg-green-500/5';
+                      case 'news': return 'border-purple-500/30 bg-purple-500/5';
+                      case 'server': return 'border-orange-500/30 bg-orange-500/5';
+                      case 'settings': return 'border-red-500/30 bg-red-500/5';
+                      default: return '';
+                    }
+                  };
+
+                  const getTypeIcon = (type: string) => {
+                    switch (type) {
+                      case 'user': return 'User';
+                      case 'shop': return 'ShoppingCart';
+                      case 'news': return 'Newspaper';
+                      case 'server': return 'Server';
+                      case 'settings': return 'Settings';
+                      default: return 'Info';
+                    }
+                  };
+
+                  return (
+                    <Card key={log.id} className={`${getTypeColor(log.type)} border-l-4`}>
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-start space-x-3 flex-1">
+                            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                              <Icon name={getTypeIcon(log.type) as any} size={20} className="text-primary" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-2 mb-1">
+                                <span className="font-bold text-sm">{log.admin}</span>
+                                <Icon name="ArrowRight" size={14} className="text-muted-foreground" />
+                                <span className="text-sm font-semibold">{log.action}</span>
+                              </div>
+                              <div className="text-sm text-muted-foreground mb-1">
+                                Цель: <span className="font-medium text-foreground">{log.target}</span>
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                {log.details}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-xs text-muted-foreground text-right flex-shrink-0 ml-4">
+                            <div>{log.timestamp.split(' ')[0]}</div>
+                            <div className="font-mono">{log.timestamp.split(' ')[1]}</div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+
+              <div className="mt-6 flex items-center justify-center">
+                <Button variant="outline">
+                  <Icon name="ChevronDown" size={16} className="mr-2" />
+                  Загрузить еще
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <Card className="game-card">
+              <CardContent className="p-4 text-center">
+                <Icon name="User" size={24} className="mx-auto mb-2 text-blue-500" />
+                <div className="text-2xl font-bold">{logs.filter(l => l.type === 'user').length}</div>
+                <div className="text-xs text-muted-foreground">Действия с юзерами</div>
+              </CardContent>
+            </Card>
+            <Card className="game-card">
+              <CardContent className="p-4 text-center">
+                <Icon name="ShoppingCart" size={24} className="mx-auto mb-2 text-green-500" />
+                <div className="text-2xl font-bold">{logs.filter(l => l.type === 'shop').length}</div>
+                <div className="text-xs text-muted-foreground">Изменения магазина</div>
+              </CardContent>
+            </Card>
+            <Card className="game-card">
+              <CardContent className="p-4 text-center">
+                <Icon name="Newspaper" size={24} className="mx-auto mb-2 text-purple-500" />
+                <div className="text-2xl font-bold">{logs.filter(l => l.type === 'news').length}</div>
+                <div className="text-xs text-muted-foreground">Публикации новостей</div>
+              </CardContent>
+            </Card>
+            <Card className="game-card">
+              <CardContent className="p-4 text-center">
+                <Icon name="Server" size={24} className="mx-auto mb-2 text-orange-500" />
+                <div className="text-2xl font-bold">{logs.filter(l => l.type === 'server').length}</div>
+                <div className="text-xs text-muted-foreground">Управление серверами</div>
+              </CardContent>
+            </Card>
+            <Card className="game-card">
+              <CardContent className="p-4 text-center">
+                <Icon name="Settings" size={24} className="mx-auto mb-2 text-red-500" />
+                <div className="text-2xl font-bold">{logs.filter(l => l.type === 'settings').length}</div>
+                <div className="text-xs text-muted-foreground">Изменения настроек</div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

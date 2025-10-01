@@ -12,9 +12,11 @@ interface NavigationProps {
   navigationItems: NavigationItem[];
   activeSection: string;
   setActiveSection: (section: string) => void;
+  currentUser?: string;
+  onLogout?: () => void;
 }
 
-export default function Navigation({ navigationItems, activeSection, setActiveSection }: NavigationProps) {
+export default function Navigation({ navigationItems, activeSection, setActiveSection, currentUser, onLogout }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -80,6 +82,13 @@ export default function Navigation({ navigationItems, activeSection, setActiveSe
               <Button variant="outline" size="icon" className="hidden md:flex">
                 <Icon name="Settings" size={18} />
               </Button>
+
+              {currentUser && onLogout && (
+                <Button variant="outline" className="hidden md:flex" onClick={onLogout}>
+                  <Icon name="LogOut" size={16} className="mr-2" />
+                  Выйти
+                </Button>
+              )}
 
               <Button 
                 variant="outline" 

@@ -52,7 +52,7 @@ export default function HomePage({ topPlayers }: HomePageProps) {
           className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
         />
         <div className="absolute inset-0 flex flex-col items-start justify-center text-left space-y-6 px-4 pl-16">
-          <h1 className="text-7xl font-black tracking-wider drop-shadow-2xl bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
+          <h1 className="text-[14rem] font-black tracking-wider drop-shadow-2xl bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent leading-none">
             PANGAEA
           </h1>
           <p className="text-2xl text-gray-200 max-w-2xl font-medium">

@@ -84,7 +84,7 @@ export default function ShopPage({ shopItems, getRarityColor }: ShopPageProps) {
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-2">
                 <span className="text-2xl font-black text-accent">{item.price}</span>
-                <span className="text-sm text-muted-foreground">TC</span>
+                <span className="text-sm text-muted-foreground">PL</span>
               </div>
               <Button size="sm" className="game-button">
                 <Icon name="ShoppingCart" size={16} className="mr-2" />
@@ -106,7 +106,7 @@ export default function ShopPage({ shopItems, getRarityColor }: ShopPageProps) {
           <div className="flex items-center space-x-2">
             <Icon name="Coins" size={18} className="text-accent" />
             <span className="text-muted-foreground">Баланс:</span>
-            <span className="font-bold text-accent">12,450 TC</span>
+            <span className="font-bold text-accent">12,450 PL</span>
           </div>
         </div>
       </div>

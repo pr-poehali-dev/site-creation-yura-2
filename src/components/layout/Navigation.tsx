@@ -54,9 +54,17 @@ export default function Navigation({ navigationItems, activeSection, setActiveSe
             </div>
             
             <div className="flex items-center space-x-3">
-              <div className="hidden md:flex items-center space-x-2 bg-muted/50 px-4 py-2 rounded-lg border border-border">
-                <Icon name="Coins" size={18} className="text-yellow-500" />
-                <span className="font-bold text-lg">12,450</span>
+              <div className="hidden md:flex flex-col items-end space-y-1 bg-muted/50 px-4 py-2 rounded-lg border border-border">
+                <div className="flex items-center space-x-2">
+                  <Icon name="Coins" size={18} className="text-yellow-500" />
+                  <span className="font-bold text-lg">12,450</span>
+                  <span className="text-xs text-muted-foreground">PL</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Icon name="Sparkles" size={14} className="text-accent" />
+                  <span className="font-semibold text-sm text-accent">2,847</span>
+                  <span className="text-xs text-muted-foreground">ОА</span>
+                </div>
               </div>
               
               <Button className="bg-gradient-to-r from-accent to-green-600 hover:from-accent/90 hover:to-green-600/90 font-bold shadow-lg shadow-accent/30">

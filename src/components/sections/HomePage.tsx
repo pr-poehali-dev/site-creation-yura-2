@@ -49,7 +49,7 @@ export default function HomePage({ topPlayers }: HomePageProps) {
         <img 
           src="https://cdn.poehali.dev/files/afcbce9b-3f90-44bc-8705-a8ac72b77323.png" 
           alt="Pangaea" 
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-6 px-4">
           <Badge className="bg-accent/90 text-white text-sm px-4 py-2 backdrop-blur-sm">

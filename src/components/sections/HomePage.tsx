@@ -47,8 +47,8 @@ export default function HomePage({ topPlayers }: HomePageProps) {
       <div className="relative h-[500px] rounded-2xl overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/90"></div>
         <img 
-          src="/img/679e1631-55d7-426e-9745-48338a3ee7ee.jpg" 
-          alt="The Isle" 
+          src="https://cdn.poehali.dev/files/afcbce9b-3f90-44bc-8705-a8ac72b77323.png" 
+          alt="Pangaea" 
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-6 px-4">

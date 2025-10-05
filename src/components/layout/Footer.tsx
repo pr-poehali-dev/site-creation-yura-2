@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="font-bold mb-4">🦕 THE ISLE</h3>
+            <h3 className="font-bold mb-4">🦕 PANGAEA</h3>
             <p className="text-sm text-muted-foreground">
               Выживайте в мире динозавров. Охотьтесь, выращивайте потомство и станьте альфа-хищником.
             </p>
@@ -27,7 +27,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-border/30 pt-4 mt-8 text-center text-sm text-muted-foreground">
-          © 2024 THE ISLE Server. Все права защищены.
+          © 2024 PANGAEA Server. Все права защищены.
         </div>
       </div>
     </footer>

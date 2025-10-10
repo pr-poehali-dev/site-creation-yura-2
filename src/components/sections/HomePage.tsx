@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import DiscordWidget from '@/components/ui/DiscordWidget';
 
 interface TopPlayer {
   name: string;
@@ -146,6 +147,8 @@ export default function HomePage({ topPlayers }: HomePageProps) {
         </div>
 
         <div className="space-y-6">
+          <DiscordWidget />
+          
           <div>
             <h2 className="text-3xl font-black mb-6">🌍 Серверы</h2>
             <div className="space-y-3">
